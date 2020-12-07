@@ -8,34 +8,38 @@
 #include <string>
 #include <random>
 
-int main() {
+main() {
     // this function uses a try statement
-    std::string chosen_number;
-    int integer_number;
+    std::string chosen_number_string;
     int someRandomNumber;
-
-    std::random_device rseed;
-    std::mt19937 rgen(rseed());  // mersenne_twister
-    std::uniform_int_distribution<int> idist(0, 9);  // [0, 9]
-    someRandomNumber = idist(rgen);
+    int chosen_number;
 
     std::cout << someRandomNumber << std::endl;
 
     // input
     std::cout << "Enter a number between 0 and 9: ";
-    std::cin >> chosen_number;
+    std::cin >> chosen_number_string;
     std::cout << "" << std::endl;
 
     // process & output
     try {
-        integer_number = std::stoi(chosen_number);
-        std::cout << "" << std::endl;
-    } catch (std::invalid_argument) {
-        std::cout << "That was not a valid integer"; }
+        chosen_number = std::stoi(chosen_number_string);
 
-    if (std::stoi(chosen_number) == someRandomNumber) {
-        std::cout << "Correct!";
-    } else {
-        std::cout << "The correct number is " << someRandomNumber << std::endl;
+        std::random_device rseed;
+        std::mt19937 rgen(rseed());  // mersenne_twister
+        std::uniform_int_distribution<int> idist(0, 9);  // [0, 9]
+        someRandomNumber = idist(rgen);
+
+        if (chosen_number == someRandomNumber) {
+            // output
+            std::cout << "Correct!" << std::endl;
+        } else {
+            // output
+            std::cout << "The correct number is: "
+            << someRandomNumber << std::endl;
+        }
+    } catch (std::invalid_argument) {
+        //output
+        std::cout << "That was not a valid integer" << std::endl;
     }
 }
